@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-interface PaymentInterface
+interface PaymentStrategy
 {
     public function pay(): void;
 }
 
-class Paypal implements PaymentInterface {
+class Paypal implements PaymentStrategy {
     public function pay(): void
     {
         print "Paid by Paypal";
     }
 }
 
-class Cash implements PaymentInterface {
+class Cash implements PaymentStrategy {
     public function pay(): void
     {
         print "Paid by Cash";
     }
 }
 
-class Points implements PaymentInterface {
+class Points implements PaymentStrategy {
     public function pay(): void
     {
         print "Paid by Points";
@@ -29,21 +29,21 @@ class Points implements PaymentInterface {
 }
 
 
-class PaymentStrategy implements PaymentInterface
+class PaymentContext implements PaymentStrategy
 {
-    protected ?PaymentInterface $paymentService;
+    protected ?PaymentStrategy $paymentService = null;
     public function pay(): void
     {
         $this->paymentService->pay();
     }
 
-    public function setPayment(PaymentInterface $payment): void
+    public function setPayment(PaymentStrategy $payment): void
     {
         $this->paymentService = $payment;
     }
 }
 
-$paymentService = new PaymentStrategy();
+$paymentService = new PaymentContext();
 $paymentService->setPayment(new Paypal());
 $paymentService->pay();
 $paymentService->setPayment(new Points());
