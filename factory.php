@@ -31,7 +31,7 @@ class PushNotification implements NotificationInterface
     }
 }
 
-class MessageFactory
+abstract class MessageFactory
 {
     public static function create(string $type): NotificationInterface
     {
