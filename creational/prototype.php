@@ -8,10 +8,10 @@ interface EmailPrototype
 class Email implements EmailPrototype
 {
     public function __construct(
-        private ?string $template = null,
+        readonly private ?string $template = null,
         private ?string $email = null,
         private ?DB $db = null,
-        private bool $deep_clone = false
+        readonly private bool $deep_clone = false
     ) {}
 
     public function __clone() {
