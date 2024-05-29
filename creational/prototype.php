@@ -7,21 +7,12 @@ interface EmailPrototype
 
 class Email implements EmailPrototype
 {
-    private ?string $template = null;
-
-    private ?string $email = null;
-
-    private ?DB $db = null;
-
-    private bool $deep_clone = false;
-
-    public function __construct(string $email, string $template, DB $db, bool $deep_clone)
-    {
-        $this->email = $email;
-        $this->template = $template;
-        $this->db = $db;
-        $this->deep_clone = $deep_clone;
-    }
+    public function __construct(
+        private ?string $template = null,
+        private ?string $email = null,
+        private ?DB $db = null,
+        private bool $deep_clone = false
+    ) {}
 
     public function __clone() {
         // Blank email due to privacy reasons.
@@ -70,7 +61,7 @@ class DB
     }
 }
 
-function shallowCopy()
+function shallowCopy(): void
 {
     $template = new Template();
     $db = new DB();
@@ -87,7 +78,7 @@ function shallowCopy()
     print ($prototype_2->getEmail() . " : " . $prototype_2->getTemplate() . " : DB Obj=" . spl_object_id($prototype_2->getDB()) . PHP_EOL);
 }
 
-function deepCopy()
+function deepCopy(): void
 {
     $template = new Template();
     $db = new DB();
